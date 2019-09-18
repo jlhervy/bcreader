@@ -8,12 +8,12 @@ from import_dataset import *
 from parameters import *
 
 
-model = models.make_model(input_shape, batch_size= batch_size)
+model = models.make_model(input_shape)
 model.summary()
 
 
 adam_optimizer = tf.keras.optimizers.Adam(learning_rate=0.00094,beta_1=0.864,beta_2=0.9996,epsilon=1e-07, amsgrad=False,)
-model.compile(loss='binary_crossentropy', optimizer=adam_optimizer,metrics=['accuracy'])
+model.compile(loss='categorical_crossentropy', optimizer=adam_optimizer,metrics=['accuracy'])
 
 
 #Callbacks

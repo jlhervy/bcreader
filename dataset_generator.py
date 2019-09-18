@@ -25,7 +25,7 @@ coder = barcode.get_barcode_class(barcode_type)
 
 
 T = TransformUtils(w=WIDTH, h=HEIGHT)
-labels = np.zeros((nb_img, 100), dtype=np.bool_)
+labels = np.array([np.zeros((nb_img, 10), dtype=np.bool_)] *10)
 for k in range(nb_img):
     nb = rd.randint(0, max_barcode_number)
     nb_digits = len(str(max_barcode_number))
@@ -33,7 +33,6 @@ for k in range(nb_img):
     barcode  = coder(nb, ImageWriter())
     barcode.save('./dataset/temp', options=barcode_options)
     temp = cv2.imread("./dataset/temp.png", cv2.IMREAD_GRAYSCALE)
-    temp = cv2.resize(temp, (WIDTH, HEIGHT), interpolation=cv2.INTER_AREA)
     ##########################################################
     ################### DATA AUGMENTATION ####################
     ##########################################################
@@ -52,12 +51,8 @@ for k in range(nb_img):
 
     nb_arr = np.array(list(nb))
     vect = []
-    for d in nb_arr:
-        cat = to_categorical(d, 10)
-        vect.append(cat)
-    # mat = np.stack(vect)
-    # labels[k*10:k*10+10, :]  = mat
-    vect = np.concatenate(vect, axis=0)
-    labels[k, :] = vect
+    for d in range(nb_arr.shape[0]):
+        cat = to_categorical(nb_arr[d], 10)
+        labels[d][k] = cat
 np.save("./dataset/labels", labels)
 os.unlink("./dataset/temp.png")

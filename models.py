@@ -12,8 +12,8 @@ def _conv_block(filters, kernel_size, x) :
     return x
 
 
-def make_model(input_shape, batch_size):
-    inputs = tf.keras.Input(shape=input_shape, batch_size = batch_size)
+def make_model(input_shape):
+    inputs = tf.keras.Input(shape=input_shape)
     x = _conv_block(32, 5, inputs)
     x = _conv_block(64, 3, x)
     x = _conv_block(128, 3, x)
@@ -24,9 +24,16 @@ def make_model(input_shape, batch_size):
     x = ly.Activation("relu")(x)
     x = ly.Dense(units=4096)(x)
     x = ly.Activation("relu")(x)
-    x = ly.Dense(units= 100)(x)
-    #x = ly.Reshape((10, 10))(x)
-    outputs = ly.Activation("softmax")(x)
+    d0 = ly.Dense(units= 10, activation="softmax")(x)
+    d1 = ly.Dense(units= 10, activation="softmax")(x)
+    d2 = ly.Dense(units= 10, activation="softmax")(x)
+    d3 = ly.Dense(units= 10, activation="softmax")(x)
+    d4 = ly.Dense(units= 10, activation="softmax")(x)
+    d5 = ly.Dense(units= 10, activation="softmax")(x)
+    d6 = ly.Dense(units= 10, activation="softmax")(x)
+    d7 = ly.Dense(units= 10, activation="softmax")(x)
+    d8 = ly.Dense(units= 10, activation="softmax")(x)
+    d9 = ly.Dense(units= 10, activation="softmax")(x)
 
-    model = tf.keras.Model(inputs=[inputs], outputs=[outputs])
+    model = tf.keras.Model(inputs=[inputs], outputs=[d0, d1, d2, d3, d4, d5, d6, d7, d8, d9])
     return model

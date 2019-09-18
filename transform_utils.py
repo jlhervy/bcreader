@@ -10,11 +10,11 @@ class TransformUtils:
         self.WIDTH = w
 
     def darken(self, img):
-        coeff = rd.randint(4, 8)/10
+        coeff = rd.randint(6, 8)/10
         return (img*coeff).astype(np.uint8)
 
     def brighten(self, img):
-        coeff = rd.randint(12, 16)/10
+        coeff = rd.randint(12, 14)/10
         v2 = 2 - coeff
         return (img * v2 + (1 - v2) * 255).astype(np.uint8)
 
