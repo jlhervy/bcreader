@@ -1,3 +1,9 @@
+# Custom folders
+logs/
+dataset/
+.idea/
+*.pdf
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
