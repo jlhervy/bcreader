@@ -8,7 +8,7 @@ from import_dataset import *
 from parameters import *
 
 
-model = models.make_model(input_shape, batch_size= batch_size)
+model = models.make_model(input_shape)
 model.summary()
 
 

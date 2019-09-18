@@ -33,7 +33,6 @@ for k in range(nb_img):
     barcode  = coder(nb, ImageWriter())
     barcode.save('./dataset/temp', options=barcode_options)
     temp = cv2.imread("./dataset/temp.png", cv2.IMREAD_GRAYSCALE)
-    temp = cv2.resize(temp, (WIDTH, HEIGHT), interpolation=cv2.INTER_AREA)
     ##########################################################
     ################### DATA AUGMENTATION ####################
     ##########################################################
