@@ -12,7 +12,7 @@ from transform_utils import TransformUtils
 
 #First, delete everything in ./dataset
 cwd = os.getcwd()
-path = os.path.join(cwd, "dataset")
+path = os.path.join(cwd, generation_folder)
 
 os.chdir(path)
 for image_path in glob.glob("*.png"):
@@ -30,9 +30,9 @@ for k in range(nb_img):
     nb = rd.randint(0, max_barcode_number)
     nb_digits = len(str(max_barcode_number))
     nb = str(nb).zfill(nb_digits)
-    barcode  = coder(nb, ImageWriter())
-    barcode.save('./dataset/temp', options=barcode_options)
-    temp = cv2.imread("./dataset/temp.png", cv2.IMREAD_GRAYSCALE)
+    barcode  = coder(nb, ImageWriter(), add_checksum=False)
+    barcode.save("./" +generation_folder+'/temp', options=barcode_options)
+    temp = cv2.imread("./" +generation_folder+'/temp.png', cv2.IMREAD_GRAYSCALE)
     ##########################################################
     ################### DATA AUGMENTATION ####################
     ##########################################################
@@ -54,5 +54,5 @@ for k in range(nb_img):
     for d in range(nb_arr.shape[0]):
         cat = to_categorical(nb_arr[d], 10)
         labels[d][k] = cat
-np.save("./dataset/labels", labels)
-os.unlink("./dataset/temp.png")
+np.save("./" + generation_folder + "/labels", labels)
+os.unlink("./" + generation_folder + "/temp.png")

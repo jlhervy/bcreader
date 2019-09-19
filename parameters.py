@@ -1,9 +1,10 @@
 HEIGHT = 118
-WIDTH = 524
-nb_img = 5000
+WIDTH = 486
+nb_img = 50
 channels = 1
-epochs = 25
-batch_size = 128
+epochs = 15
+generation_folder = "inference"
+batch_size = 32
 nb_classes = 10
 max_barcode_number = 9999999999
 barcode_type = 'code39'

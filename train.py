@@ -33,9 +33,9 @@ checkpoint_filepath = os.path.join(logpath,  "best_model.h5")
 
 checkpoint_cb = ModelCheckpoint(checkpoint_filepath, save_best_only=True)
 
-tensorboard_callback = TensorBoard(log_dir=checkpoint_filepath)
+tensorboard_callback = TensorBoard(log_dir=logpath)
 
-callbacks = [checkpoint_cb]
+callbacks = [checkpoint_cb, tensorboard_callback]
 
 history = model.fit(X, y,
 			batch_size=batch_size,
