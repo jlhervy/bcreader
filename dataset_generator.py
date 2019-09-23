@@ -28,7 +28,6 @@ T = TransformUtils(w=WIDTH, h=HEIGHT)
 labels = np.array([np.zeros((nb_img, 10), dtype=np.bool_)] *10)
 for k in range(nb_img):
     nb = rd.randint(0, max_barcode_number)
-    nb_digits = len(str(max_barcode_number))
     nb = str(nb).zfill(nb_digits)
     barcode  = coder(nb, ImageWriter(), add_checksum=False)
     barcode.save("./" +generation_folder+'/temp', options=barcode_options)

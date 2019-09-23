@@ -23,4 +23,3 @@ X = X/255.0
 
 y = np.load("./dataset/labels.npy")
 y = [y[k] for k in range(10)]
-
