@@ -25,7 +25,7 @@ coder = barcode.get_barcode_class(barcode_type)
 
 
 T = TransformUtils(w=WIDTH, h=HEIGHT)
-labels = np.zeros((nb_img, 100), dtype=np.bool_)
+#labels = np.zeros((nb_img, 100), dtype=np.bool_)
 labels = np.array([np.zeros((nb_img, 10), dtype=np.bool_)] *10)
 for k in range(nb_img):
     nb = rd.randint(0, max_barcode_number)
