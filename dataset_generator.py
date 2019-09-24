@@ -5,7 +5,7 @@ import os
 import glob
 import cv2
 from barcode.writer import ImageWriter
-from tensorflow.python.keras.utils import to_categorical
+from tensorflow.keras.utils import to_categorical
 
 from parameters import *
 from transform_utils import TransformUtils
@@ -25,6 +25,7 @@ coder = barcode.get_barcode_class(barcode_type)
 
 
 T = TransformUtils(w=WIDTH, h=HEIGHT)
+labels = np.zeros((nb_img, 100), dtype=np.bool_)
 labels = np.array([np.zeros((nb_img, 10), dtype=np.bool_)] *10)
 for k in range(nb_img):
     nb = rd.randint(0, max_barcode_number)
@@ -52,6 +53,8 @@ for k in range(nb_img):
     vect = []
     for d in range(nb_arr.shape[0]):
         cat = to_categorical(nb_arr[d], 10)
+        #vect.append(cat)
         labels[d][k] = cat
+    #labels[k] =np.concatenate(vect, axis=0)
 np.save("./" + generation_folder + "/labels", labels)
 os.unlink("./" + generation_folder + "/temp.png")

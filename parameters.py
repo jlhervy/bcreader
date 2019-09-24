@@ -1,8 +1,8 @@
 HEIGHT = 82
 WIDTH = 486
-nb_img = 10000
+nb_img = 2500
 channels = 1
-epochs = 10
+epochs = 20
 generation_folder = "dataset"
 batch_size = 16
 nb_classes = 10

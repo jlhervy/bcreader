@@ -2,7 +2,7 @@ import numpy as np
 import cv2
 import os
 from tensorflow.python.keras.utils import to_categorical
-from sklearn.model_selection import train_test_split
+
 
 from parameters import *
 

@@ -1,8 +1,6 @@
-import os
 import tensorflow as tf
-from tensorflow.python.keras.models import load_model
-from tensorflow.python.keras.callbacks import TensorBoard, ModelCheckpoint, ReduceLROnPlateau, EarlyStopping
-from tensorflow.python.keras import backend as K
+from tensorflow.keras.callbacks import TensorBoard, ModelCheckpoint, ReduceLROnPlateau, EarlyStopping
+from tensorflow.keras import backend as K
 import models
 from tensorflow.keras.losses import categorical_crossentropy
 from import_dataset import *
