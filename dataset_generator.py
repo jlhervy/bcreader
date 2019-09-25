@@ -36,9 +36,10 @@ for k in range(nb_img):
     ##########################################################
     ################### DATA AUGMENTATION ####################
     ##########################################################
-    if rd.random()<0.5 :
-        temp = T.updown(temp)
-    temp = T.occlusion(temp)
+    # if rd.random()<0.5 :
+    #     temp = T.updown(temp)
+    if rd.random()<0.9:
+        temp = T.occlusion(temp)
     temp = T.translation(temp)
     temp = T.rotation(temp)
     if rd.random()<0.66:

@@ -1,10 +1,10 @@
 HEIGHT = 82
 WIDTH = 486
-nb_img = 32000
+nb_img = 5000
 channels = 1
-epochs = 30
+epochs = 50
 generation_folder = "dataset"
-batch_size = 16
+batch_size = 128
 nb_classes = 10
 max_barcode_number = 9999999999
 nb_digits = len(str(max_barcode_number))

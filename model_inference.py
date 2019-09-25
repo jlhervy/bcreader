@@ -3,6 +3,9 @@ from tensorflow.keras.models import load_model
 from parameters import *
 import numpy as np
 import models
+import tensorflow as tf
+
+model_path = "./logs/train-8/best_model.h5"
 
 def from_categorical_to_integers(res):
     nb = ""
@@ -15,19 +18,21 @@ def from_categorical_to_integers(res):
         nb = nb + str(dg)
     return nb
 
-def compare_diff(res, truth):
-    truth = truth.astype(np.float32)
+def compare_diff(res):
     nb_diff = 0
     for k in range(nb_digits):
-        if not((truth[k*nb_classes:k*nb_classes+10] == res[0][k*nb_classes:k*nb_classes+10]).all()):
+        if not((y[k][i] == res[0][k*nb_classes:k*nb_classes+10]).all()):
             nb_diff = nb_diff +1
-    print(nb_diff)
+    return nb_diff
 y = np.load("./inference/labels.npy")
-
-model = load_model("./logs/train-41/best_model.h5")
-for i in range(50):
-    cb = cv2.imread("./inference/cb-" + str(i) + ".png", cv2.IMREAD_GRAYSCALE)
-    cb = cb.reshape([1, HEIGHT, WIDTH, 1])
-    res = model.predict(cb)
-    truth = y[i]
-    compare_diff(res, truth)
+y = y.astype(np.float32)
+with tf.device('/gpu:1'):
+    model = load_model(model_path)
+    total_diff = 0
+    for i in range(1000):
+        cb = cv2.imread("./inference/cb-" + str(i) + ".png", cv2.IMREAD_GRAYSCALE)
+        cb = cb.reshape([1, HEIGHT, WIDTH, 1])
+        res = model.predict(cb)
+        nb_diff = compare_diff(res)
+        total_diff = total_diff + nb_diff
+    print("total nb of wrong digits : " + str(total_diff))

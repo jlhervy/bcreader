@@ -2,7 +2,7 @@ import numpy as np
 import cv2
 import os
 from tensorflow.python.keras.utils import to_categorical
-
+import tensorflow as tf
 
 from parameters import *
 
@@ -22,4 +22,7 @@ X = np.array(all_images)
 X = X/255.0
 
 y = np.load("./dataset/labels.npy")
-y = [y[k] for k in range(10)]
+y = np.swapaxes(y, 0,1)
+y = y.tolist()
+
+train_dataset = tf.data.Dataset.from_tensor_slices((X, y))

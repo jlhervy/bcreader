@@ -1,49 +1,28 @@
 import tensorflow as tf
-from tensorflow.keras.callbacks import TensorBoard, ModelCheckpoint, ReduceLROnPlateau, EarlyStopping
 from tensorflow.keras import backend as K
 import models
 from tensorflow.keras.losses import binary_crossentropy, categorical_crossentropy
 from import_dataset import *
 from parameters import *
+from callbacks import *
 
 
 
+# mirrored_strategy = tf.distribute.MirroredStrategy()
+# with mirrored_strategy.scope():
 
-model = models.make_model(input_shape)
-model.summary()
+with tf.device('/gpu:1'):
+	model = models.make_model(input_shape)
+	model.summary()
 
 
-adam_optimizer = tf.keras.optimizers.Adam(learning_rate=0.00094,beta_1=0.864,beta_2=0.9996,epsilon=1e-07, amsgrad=False,)
-model.compile(loss='categorical_crossentropy', optimizer=adam_optimizer,metrics=['accuracy'])
+	adam_optimizer = tf.keras.optimizers.Adam(learning_rate=0.00094,beta_1=0.864,beta_2=0.9996,epsilon=1e-07, amsgrad=False,)
+	model.compile(loss='categorical_crossentropy', optimizer=adam_optimizer,metrics=['accuracy'])
 
-
-#Callbacks
-def generate_unique_logpath(logdir, raw_run_name):
-    i = 0
-    while(True):
-        run_name = raw_run_name + "-" + str(i)
-        log_path = os.path.join(logdir, run_name)
-        if not os.path.isdir(log_path):
-            return log_path
-        i = i + 1
-
-logpath = generate_unique_logpath("logs", "train")
-if not os.path.exists(logpath):
-    os.mkdir(logpath)
-checkpoint_filepath = os.path.join(logpath,  "best_model.h5")
-
-checkpoint_cb = ModelCheckpoint(checkpoint_filepath, save_best_only=True)
-
-tensorboard_callback = TensorBoard(log_dir=logpath)
-
-earlystop_cb = EarlyStopping(monitor='val_acc',patience=3)
-callbacks = [checkpoint_cb, tensorboard_callback, earlystop_cb]
-
-history = model.fit(X, y,
-			batch_size=batch_size,
+	train_dataset = train_dataset.batch(batch_size)
+	history = model.fit(train_dataset,
 			epochs=epochs,
-			verbose=1,
-            validation_split=0.1,
+			verbose=0,
 			callbacks=callbacks)
 
 
