@@ -1,3 +1,3 @@
 # bcreader
 
-Implementation of the thesis about barcodes
+Lecture des codes à barre à l'aide de deep learning
